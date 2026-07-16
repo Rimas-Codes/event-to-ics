@@ -131,25 +131,11 @@ The main screen shows a large text area where you paste the event text. You'll s
 - A **"Clear"** button to reset the text area
 - A **theme toggle** (light/dark) and a **settings** button in the header
 
-```
-┌─────────────────────────────────────────────────┐
-│  📅 Event to ICS          [theme] [⚙ Settings]  │
-│                                                  │
-│  ┌────────────────────────────────────────────┐  │
-│  │  Paste your event text here...             │  │
-│  │                                             │  │
-│  │                                             │  │
-│  │                                             │  │
-│  └────────────────────────────────────────────┘  │
-│                                                  │
-│  [Load sample]  [Paste from clipboard]           │
-│                                                  │
-│           [ 🪄 Extract Event ]                   │
-└─────────────────────────────────────────────────┘
-```
-
 ![Before Groq](docs/before%20groq.png)
 
+After setting up Groq, the user interface would look as shown below. 
+
+![After Groq](docs/after%20groq.png)
 
 ### Phase 2: AI Processing
 
@@ -174,22 +160,7 @@ The parsed event appears in an editable form:
 - **Confidence badge** — green (high), amber (medium), red (low)
 - **AI Reasoning** — collapsible section showing how the AI interpreted the text
 
-```
-┌─────────────────────────────────────────────────┐
-│  ✅ Event Extracted                    [high]    │
-│                                                  │
-│  Title:    [ Meeting with Alex             ]     │
-│  Start:    [2026-07-21] [14:00]                 │
-│  End:      [2026-07-21] [14:30]                 │
-│  Location: [ Zoom                        ]     │
-│  Reminder: [15 minutes ▼]  ☐ Email 1 day before │
-│                                                  │
-│  ▼ AI Reasoning                                  │
-│    "The user said 'next Tuesday at 2pm'...       │
-│                                                  │
-│  [ 📥 Download .ics ]                            │
-└─────────────────────────────────────────────────┘
-```
+![Groq Result](docs/result%20.jpeg)
 
 ### Phase 4: Download
 
