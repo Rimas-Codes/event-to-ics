@@ -131,11 +131,11 @@ The main screen shows a large text area where you paste the event text. You'll s
 - A **"Clear"** button to reset the text area
 - A **theme toggle** (light/dark) and a **settings** button in the header
 
-![Before Groq](docs/before%20groq.png)
+![Before Groq](docs/before%20groq.png){width="400"}
 
 After setting up Groq, the user interface would look as shown below. 
 
-![After Groq](docs/after%20groq.png)
+![After Groq](docs/after%20groq.png){width="400"}
 
 ### Phase 2: AI Processing
 
@@ -160,7 +160,7 @@ The parsed event appears in an editable form:
 - **Confidence badge** — green (high), amber (medium), red (low)
 - **AI Reasoning** — collapsible section showing how the AI interpreted the text
 
-![Groq Result](docs/result%20.jpeg)
+![Groq Result](docs/result.jpeg){width="400"}
 
 ### Phase 4: Download
 
