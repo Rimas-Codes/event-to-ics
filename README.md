@@ -7,7 +7,6 @@
 
 
 ```mermaid
-
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
 flowchart TD
     %% Styling Definitions for modern look (soft pastels and rounded corners)
@@ -19,7 +18,7 @@ flowchart TD
     %% Boundary Nodes Styling (for grouping and clarity)
     classDef boundary stroke:#9e9e9e,stroke-width:1px,fill:#fafafa,rx:12,ry:12;
 
-    %% Column 1: User -> Client Side -> Calendar App
+    %% Column 1: Top-to-Bottom Flow
     U["👤 User<br/>Pastes event text"]:::user
     
     subgraph Client ["Client Side (Browser)"]
@@ -32,7 +31,7 @@ flowchart TD
 
     C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
 
-    %% Column 2: Server Side
+    %% Column 2: Server Side (Positioned beside Client via data links)
     subgraph Server ["Server Side (Next.js Node.js)"]
         direction TB
         A["🧠 API Route<br/>ai-parser.ts"]:::backend
@@ -40,26 +39,25 @@ flowchart TD
     end
     class Server boundary;
 
-    %% Column 3: Groq API
+    %% Column 3: Groq API (Positioned beside Server via data links)
     G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
 
-    %% Data Flow / Relationships (Interaction Links)
+    %% Data Flow / Connections
     U -->|1. text + timezone| B
     
-    %% Client & Server interactions
+    %% Cross-column interactions (Forces Server to be beside Client)
     B ==>|2. POST /api/ai/parse| A
     A ==>|3. returns parsed event| B
     
-    %% Internal Client Flow (Solid)
+    %% Internal Client Flow
     B -->|4. View / Edit data| E
     E -->|5. Generate Ics| I
     I -->|6. .ics download| C
 
-    %% Internal Server Flow
+    %% Internal Server Flow & External AI (Forces Groq to be beside Server)
     A -->|System + User messages| G
     G -->|JSON event data| A
     A -.->|GET/PUT /api/settings/ai| DB
-
 ---
 
 ## What the App Does
