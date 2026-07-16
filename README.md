@@ -6,15 +6,46 @@
 
 ```mermaid
 flowchart TD
-    U["User<br/>Pastes event text"] -->|text + timezone| B["Browser UI<br/>React / Next.js"]
-    B -->|POST /api/ai/parse| A["Next.js API Route<br/>ai-parser.ts"]
-    A -->|system + user messages| G["Groq API<br/>Llama 3.3 70B"]
-    A -.->|GET/PUT /api/settings/ai| DB["SQLite<br/>Stores API key and model"]
-    G -->|JSON event data| A
-    A -->|parsed event| B
-    B -->|user edits| E["Event Editor"]
-    E -->|generateIcs| I["ICS Generator"]
-    I -->|.ics download| C["Calendar App<br/>Google / Outlook / Apple"]
+    %% Styling Definitions
+    classDef user fill:#e1f5fe,stroke:#039be5,stroke-width:2px;
+    classDef frontend fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    classDef backend fill:#fff3e0,stroke:#ff9800,stroke-width:2px;
+    classDef external fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px;
+
+    %% Nodes Outside Boundaries
+    U["👤 User<br/>Pastes event text"]:::user
+    C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
+
+    %% Client Side Group
+    subgraph Client ["Client Side (Browser)"]
+        B["💻 Browser UI<br/>React / Next.js"]:::frontend
+        E["✏️ Event Editor<br/>Component"]:::frontend
+        I["⚙️ ICS Generator<br/>Utility"]:::frontend
+    end
+
+    %% Server Side Group
+    subgraph Server ["Server Side (Next.js Node.js)"]
+        A["🧠 API Route<br/>ai-parser.ts"]:::backend
+        DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
+    end
+
+    %% External Services
+    G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
+
+    %% Data Flow / Relationships
+    U -->|1. text + timezone| B
+    
+    %% Frontend to Backend Loop
+    B <=>|2. POST /api/ai/parse <br/> (Sends text / Returns parsed event)| A
+    
+    %% Editor Flow
+    B -->|3. View / Edit data| E
+    E -->|4. generateIcs| I
+    I -->|5. .ics download| C
+
+    %% Backend Internals
+    A <=>|System + User messages / JSON| G
+    A -.->|GET/PUT /api/settings/ai| DB
 ```
 
 ![Architecture Diagram](docs/architecture-diagram.png)
