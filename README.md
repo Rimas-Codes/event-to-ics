@@ -8,70 +8,60 @@
 
 ```mermaid
 
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#F0F8FF', 'primaryTextColor': '#333333', 'primaryBorderColor': '#AEB6BF', 'lineColor': '#555555', 'fontSize': '15px', 'fontFamily': 'inter, helvetica, sans-serif'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
 flowchart TD
-    %% --- Styling Definitions from the RAG Pipeline Palette ---
-    classDef action fill:#EBF5FB,stroke:#AEB6BF,stroke-width:1px,color:#1B4F72,rx:5,ry:5;
-    classDef process fill:#E8F5E9,stroke:#A3E4D7,stroke-width:1px,color:#196F3D,rx:5,ry:5;
-    classDef backend fill:#FEF9E7,stroke:#F7DC6F,stroke-width:1px,color:#7D6608,rx:5,ry:5;
-    classDef ai fill:#FDEDEC,stroke:#F1948A,stroke-width:1px,color:#7B241C,rx:5,ry:5;
-    classDef storage fill:#F4F6F6,stroke:#D5DBDB,stroke-width:1px,color:#515A5A,rx:5,ry:5;
+    %% Styling Definitions for modern look (soft pastels and rounded corners)
+    classDef user fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b,rx:10,ry:10;
+    classDef frontend fill:#e8f5e9,stroke:#388e3c,stroke-width:1.5px,color:#1b5e20,rx:8,ry:8;
+    classDef backend fill:#fff3e0,stroke:#f57c00,stroke-width:1.5px,color:#e65100,rx:8,ry:8;
+    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px,color:#4a148c,rx:10,ry:10;
     
-    %% Boundary Nodes Styling
-    classDef boundary stroke:#AEB6BF,stroke-width:1px,fill:#FAFAFA,rx:8,ry:8;
+    %% Boundary Nodes Styling (for grouping and clarity)
+    classDef boundary stroke:#9e9e9e,stroke-width:1px,fill:#fafafa,rx:12,ry:12;
 
-    %% --- Column 1: Client Flow (Vertical stack) ---
-    U["👤 User<br/>Pastes event text"]:::action
+    %% Column 1: User -> Client Side -> Calendar App
+    U["👤 User<br/>Pastes event text"]:::user
     
     subgraph Client ["Client Side (Browser)"]
         direction TB
-        B["💻 Browser UI<br/>React / Next.js"]:::process
-        E["✏️ Event Editor<br/>Component"]:::process
-        I["⚙️ ICS Generator<br/>Utility"]:::process
+        B["💻 Browser UI<br/>React / Next.js"]:::frontend
+        E["✏️ Event Editor<br/>Component"]:::frontend
+        I["⚙️ ICS Generator<br/>Utility"]:::frontend
     end
     class Client boundary;
 
-    C["📅 Calendar App<br/>Google / Outlook / Apple"]:::ai
+    C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
 
-    %% Connect Column 1 vertically
+    %% Column 2: Server Side
+    subgraph Server ["Server Side (Next.js Node.js)"]
+        direction TB
+        A["🧠 API Route<br/>ai-parser.ts"]:::backend
+        DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
+    end
+    class Server boundary;
+
+    %% Column 3: Groq API
+    G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
+
+    %% Data Flow / Relationships (Interaction Links)
     U -->|1. text + timezone| B
+    
+    %% Client & Server interactions
+    B ==>|2. POST /api/ai/parse| A
+    A ==>|3. returns parsed event| B
+    
+    %% Internal Client Flow (Solid)
     B -->|4. View / Edit data| E
     E -->|5. Generate Ics| I
     I -->|6. .ics download| C
 
-
-    %% --- Column 2: Server Side ---
-    subgraph Server ["Server Side (Next.js Node.js)"]
-        direction TB
-        A["🧠 API Route<br/>ai-parser.ts"]:::backend
-        DB[("💾 SQLite Database<br/>Stores API key & model")]:::storage
-    end
-    class Server boundary;
-
-    %% Server Internal Flow
-    A -.->|GET/PUT /api/settings/ai| DB
-
-
-    %% --- Column 3: External API ---
-    G["🤖 Groq API<br/>Llama 3.3 70B"]:::ai
-
-
-    %% --- Structural Layout Links (Invisible alignment spine) ---
-    %% This forces Client, Server, and Groq to align left-to-right
-    B ~~~ A
-    A ~~~ G
-
-
-    %% --- Cross-Column Data Interconnections ---
-    B ==>|2. POST /api/ai/parse| A
-    A ==>|3. returns parsed event| B
-    
+    %% Internal Server Flow
     A -->|System + User messages| G
     G -->|JSON event data| A
+    A -.->|GET/PUT /api/settings/ai| DB
 
-```
-
-<!-- ![Architecture Diagram](docs/architecture-diagram.png) -->
+    %% Invisible structural links to force the precise side-by-side column layout
+    Client ~~~ Server ~~~ G
 
 ---
 
