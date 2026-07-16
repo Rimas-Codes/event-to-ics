@@ -1,0 +1,104 @@
+# Electron Builder configuration for Event to ICS desktop app
+# Docs: https://www.electron.build/configuration
+
+appId: com.eventtoics.desktop
+productName: Event to ICS
+copyright: Copyright © 2026
+
+directories:
+  output: dist
+  buildResources: build
+
+# Files to include in the app package
+files:
+  # Core app files (electron main process, icon, database template)
+  - electron/**/*
+  - build/empty-db.db
+  - build/icon.ico
+  - package.json
+  # Exclude source files and dev artifacts from the package
+  - "!**/.DS_Store"
+  - "!**/*.{md,markdown}"
+  - "!**/.{idea,git,cache,vscode,DS_Store}"
+  - "!**/.env"
+  - "!**/prisma/*.db"
+  - "!dist/**/*"
+  - "!src/**/*"
+  - "!scripts/**/*"
+  - "!upload/**/*"
+  - "!*.bat"
+  - "!*.sh"
+
+# The Next.js standalone build (server.js + node_modules + Prisma binaries)
+# is bundled as extraResources because electron-builder's default file
+# filter strips all node_modules directories from the `files` patterns.
+# extraResources copies files verbatim without filtering.
+extraResources:
+  - from: .next/standalone
+    to: standalone
+    filter:
+      - "**/*"
+
+# Don't use asar — the Next.js standalone server needs to read files
+# directly from the filesystem (native Prisma engine, static assets, etc.)
+asar: false
+
+# Windows build settings
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+  # Disable ALL code signing — we don't have a certificate.
+  # This also prevents the winCodeSign archive download, which fails on
+  # Windows without Developer Mode (due to macOS symlink extraction).
+  signAndEditExecutable: false
+  signtoolOptions:
+    signingHashAlgorithms: null
+
+# NSIS installer settings
+nsis:
+  # One-click installer (false = show installation wizard with options)
+  oneClick: false
+
+  # Allow user to choose installation directory
+  allowToChangeInstallationDirectory: true
+
+  # Create desktop shortcut
+  createDesktopShortcut: true
+
+  # Create Start Menu shortcut
+  createStartMenuShortcut: true
+
+  # Name shown in the shortcut
+  shortcutName: Event to ICS
+
+  # Show uninstall option in Add/Remove Programs
+  uninstallDisplayName: Event to ICS
+
+  # Installer wizard languages
+  installerLanguages:
+    - en_US
+
+  # License agreement (optional — create build/license.txt if you want one)
+  # license: build/license.txt
+
+  # Per-user install (doesn't require admin)
+  perMachine: false
+
+  # Run after installation
+  runAfterFinish: true
+
+  # Delete app data on uninstall (set to true to clean up database on uninstall)
+  deleteAppDataOnUninstall: false
+
+# Don't build macOS or Linux targets
+mac:
+  target: []
+
+linux:
+  target: []
+
+# Compression level (maximum for smallest installer)
+compression: maximum
