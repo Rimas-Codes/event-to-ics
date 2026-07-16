@@ -51,7 +51,7 @@ flowchart TD
     
     %% Internal Client Flow (Solid)
     B -->|4. View / Edit data| E
-    E -->|5. generateIcs| I
+    E -->|5. Generate Ics| I
     I -->|6. .ics download| C
 
     %% Internal Server Flow (Thinner and dashed where appropriate)
@@ -60,7 +60,7 @@ flowchart TD
     A -.->|GET/PUT /api/settings/ai| DB
 ```
 
-![Architecture Diagram](docs/architecture-diagram.png)
+<!-- ![Architecture Diagram](docs/architecture-diagram.png) --> 
 
 ---
 
