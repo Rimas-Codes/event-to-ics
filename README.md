@@ -5,22 +5,12 @@
 ## How It Works
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#333', 'primaryBorderColor': '#444', 'lineColor': '#2c3e50', 'fontSize': '14px', 'fontFamily': 'Inter, system-ui, -apple-system, sans-serif'}}}%%
 flowchart TD
-    %% Styling Definitions with a fresh palette
+    %% Styling Definitions
     classDef user stroke:#00BCD4,stroke-width:1.5px,fill:#ffffff,color:#00BCD4;
     classDef frontend stroke:#4CAF50,stroke-width:1.5px,fill:#F1F8E9,color:#1B5E20;
     classDef backend stroke:#FF9800,stroke-width:1.5px,fill:#FFF3E0,color:#E65100;
     classDef external stroke:#9C27B0,stroke-width:1.5px,fill:#F3E5F5,color:#4A148C;
-    classDef boundary stroke:#BDBDBD,stroke-width:1px,fill:#F5F5F5,color:#424242,font-weight:700,rx:10,ry:10;
-    
-    %% Main and Interaction Arrows Style
-    linkStyle default color:#2c3e50,stroke-width:1.5px,fill:none;
-    %% Data Flow/Internal System Arrows Style (less prominent)
-    linkStyle 2,4,7,8 stroke-dasharray: 4 4, stroke:#607D8B,stroke-width:1px, color:#607D8B;
-
-    %% Boundary Nodes (for grouping)
-    SG_Boundary:::boundary
 
     %% Nodes Outside Boundaries
     U["👤 User<br/>Pastes event text"]:::user
@@ -28,8 +18,6 @@ flowchart TD
 
     %% Client Side Group
     subgraph Client ["Client Side (Browser)"]
-        direction TB
-        SG_C_B:::boundary
         B["💻 Browser UI<br/>React / Next.js"]:::frontend
         E["✏️ Event Editor<br/>Component"]:::frontend
         I["⚙️ ICS Generator<br/>Utility"]:::frontend
@@ -37,8 +25,6 @@ flowchart TD
 
     %% Server Side Group
     subgraph Server ["Server Side (Next.js Node.js)"]
-        direction TB
-        SG_S_B:::boundary
         A["🧠 API Route<br/>ai-parser.ts"]:::backend
         DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
     end
@@ -46,24 +32,21 @@ flowchart TD
     %% External Services
     G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
 
-    %% Connect boundary boxes for overall layout
-    SG_C_B --- SG_S_B
-
-    %% Data Flow / Relationships (Interaction Links)
+    %% Data Flow / Relationships
     U -->|1. text + timezone| B
     
-    %% Split interactions for better arrow style application
+    %% Thick arrows for primary app communication
     B ==>|2. POST /api/ai/parse| A
     A ==>|3. returns parsed event| B
     
-    %% Internal Client Flow (Solid)
+    %% Internal Client Flow
     B -->|4. View / Edit data| E
     E -->|5. generateIcs| I
     I -->|6. .ics download| C
 
-    %% Internal Server Flow (Thinner and dashed where appropriate)
-    A -->|System + User messages| G
-    G -->|JSON event data| A
+    %% Internal Server & External Data Flow (Dashed)
+    A -.->|System + User messages| G
+    G -.->|JSON event data| A
     A -.->|GET/PUT /api/settings/ai| DB
 ```
 
