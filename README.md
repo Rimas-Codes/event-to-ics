@@ -5,7 +5,6 @@
 ## How It Works
 
 
-
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
 flowchart TD
