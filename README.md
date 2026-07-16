@@ -35,16 +35,18 @@ flowchart TD
     %% Data Flow / Relationships
     U -->|1. text + timezone| B
     
-    %% Frontend to Backend Loop
-    B <=>|2. POST /api/ai/parse <br/> (Sends text / Returns parsed event)| A
+    %% Fixed: Split the bi-directional arrow into two standard ones
+    B -->|2. POST /api/ai/parse| A
+    A -->|3. returns parsed event| B
     
     %% Editor Flow
-    B -->|3. View / Edit data| E
-    E -->|4. generateIcs| I
-    I -->|5. .ics download| C
+    B -->|4. View / Edit data| E
+    E -->|5. generateIcs| I
+    I -->|6. .ics download| C
 
     %% Backend Internals
-    A <=>|System + User messages / JSON| G
+    A -->|System + User messages| G
+    G -->|JSON event data| A
     A -.->|GET/PUT /api/settings/ai| DB
 ```
 
