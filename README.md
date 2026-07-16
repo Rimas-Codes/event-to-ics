@@ -148,6 +148,9 @@ The main screen shows a large text area where you paste the event text. You'll s
 └─────────────────────────────────────────────────┘
 ```
 
+![Before Groq](docs/before%20groq.png)
+
+
 ### Phase 2: AI Processing
 
 After clicking **Extract Event**, the app:
