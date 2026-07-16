@@ -6,15 +6,15 @@
 
 ```mermaid
 flowchart TD
-    U["👤 User<br/>Pastes event text"] -->|text + timezone| B["🌐 Browser UI<br/>React / Next.js"]
-    B -->|POST /api/ai/parse| A["⚙️ Next.js API Route<br/>ai-parser.ts"]
-    A -->|system + user messages| G["⚡ Groq API<br/>Llama 3.3 70B"]
-    A -.->|GET/PUT /api/settings/ai| DB["🗃️ SQLite<br/>Stores API key & model"]
+    U["User<br/>Pastes event text"] -->|text + timezone| B["Browser UI<br/>React / Next.js"]
+    B -->|POST /api/ai/parse| A["Next.js API Route<br/>ai-parser.ts"]
+    A -->|system + user messages| G["Groq API<br/>Llama 3.3 70B"]
+    A -.->|GET/PUT /api/settings/ai| DB["SQLite<br/>Stores API key and model"]
     G -->|JSON event data| A
     A -->|parsed event| B
-    B -->|user edits| E["✏️ Event Editor"]
-    E -->|generateIcs()| I["📅 ICS Generator"]
-    I -->|.ics download| C["📋 Calendar App<br/>Google / Outlook / Apple"]
+    B -->|user edits| E["Event Editor"]
+    E -->|generateIcs| I["ICS Generator"]
+    I -->|.ics download| C["Calendar App<br/>Google / Outlook / Apple"]
 ```
 
 ![Architecture Diagram](docs/architecture-diagram.png)
