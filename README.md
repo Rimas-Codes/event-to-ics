@@ -5,75 +5,48 @@
 ## How It Works
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
 flowchart TD
-    %% Modern Styling Definitions (Gradual gradients and shadows)
-    classDef user fill:url(#gradient-blue),stroke:#3498db,stroke-width:1.5px,color:white,rx:10,ry:10;
-    classDef frontend fill:url(#gradient-green),stroke:#27ae60,stroke-width:1.5px,color:#2c3e50,rx:8,ry:8;
-    classDef backend fill:url(#gradient-orange),stroke:#d35400,stroke-width:1.5px,color:#2c3e50,rx:8,ry:8;
-    classDef external fill:url(#gradient-purple),stroke:#8e44ad,stroke-width:1.5px,color:#2c3e50,rx:10,ry:10;
-    
-    %% Boundary Node Styling (for grouping)
-    classDef boundary stroke-dasharray: 5 5, stroke:#7f8c8d, stroke-width:1px, fill:none, rx:12, ry:12, color:#7f8c8d;
+    %% Modern Dark/Minimalist Palette
+    classDef user stroke:#00d2ff,stroke-width:2px,fill:#1e293b,color:#fff;
+    classDef frontend stroke:#10b981,stroke-width:2px,fill:#0f172a,color:#e2e8f0;
+    classDef backend stroke:#f59e0b,stroke-width:2px,fill:#0f172a,color:#e2e8f0;
+    classDef external stroke:#a855f7,stroke-width:2px,fill:#1e293b,color:#fff;
 
-    %% SVG Gradient definitions (Applied via classDef fill:url(...))
-    %% (GitHub's parser supports these definitions if they are before the flowchart starts)
-    subgraph Gradients [" "]
-        direction TB
-        subgraph G1 ["Gradient Definitions"]
-            %% Define Blue, Green, Orange, Purple linear gradients
-            %% Blue (User)
-            def1["<linearGradient id='gradient-blue' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#3498db;stop-opacity:1'/><stop offset='100%' style='stop-color:#2980b9;stop-opacity:1'/></linearGradient>"]:::user
-            %% Green (Frontend)
-            def2["<linearGradient id='gradient-green' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#2ecc71;stop-opacity:1'/><stop offset='100%' style='stop-color:#27ae60;stop-opacity:1'/></linearGradient>"]:::frontend
-            %% Orange (Backend)
-            def3["<linearGradient id='gradient-orange' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#e67e22;stop-opacity:1'/><stop offset='100%' style='stop-color:#d35400;stop-opacity:1'/></linearGradient>"]:::backend
-            %% Purple (External)
-            def4["<linearGradient id='gradient-purple' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:#9b59b6;stop-opacity:1'/><stop offset='100%' style='stop-color:#8e44ad;stop-opacity:1'/></linearGradient>"]:::external
-        end
-    end
-    
-    %% The main structure
+    %% Nodes Outside Boundaries
     U["👤 User<br/>Pastes event text"]:::user
     C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
 
-    %% Client Side Group with Boundary
-    subgraph Client ["Client Side (Browser)"]
-        direction TB
-        B["💻 Browser UI<br/>React / Next.js"]:::frontend
-        E["✏️ Event Editor<br/>Component"]:::frontend
-        I["⚙️ ICS Generator<br/>Utility"]:::frontend
+    %% Client Side Group
+    subgraph Client ["💻 Client Side Browser"]
+        B["Browser UI<br/>React / Next.js"]:::frontend
+        E["Event Editor<br/>Component"]:::frontend
+        I["ICS Generator<br/>Utility"]:::frontend
     end
-    %% Apply boundary style to the subgraph itself
-    class Client boundary;
 
-    %% Server Side Group with Boundary
-    subgraph Server ["Server Side (Next.js Node.js)"]
-        direction TB
-        A["🧠 API Route<br/>ai-parser.ts"]:::backend
+    %% Server Side Group
+    subgraph Server ["🧠 Server Side Node.js"]
+        A["API Route<br/>ai-parser.ts"]:::backend
         DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
     end
-    %% Apply boundary style to the subgraph itself
-    class Server boundary;
 
     %% External Services
     G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
 
-    %% Data Flow / Relationships (Interaction Links)
+    %% Data Flow / Relationships
     U -->|1. text + timezone| B
     
-    %% Split interactions for better arrow style application
+    %% Thick arrows for primary app communication
     B ==>|2. POST /api/ai/parse| A
     A ==>|3. returns parsed event| B
     
-    %% Internal Client Flow (Solid)
+    %% Internal Client Flow
     B -->|4. View / Edit data| E
     E -->|5. generateIcs| I
     I -->|6. .ics download| C
 
-    %% Internal Server Flow (Thinner and dashed where appropriate)
-    A -->|System + User messages| G
-    G -->|JSON event data| A
+    %% Internal Server & External Data Flow (Dashed)
+    A -.->|System + User messages| G
+    G -.->|JSON event data| A
     A -.->|GET/PUT /api/settings/ai| DB
 ```
 
