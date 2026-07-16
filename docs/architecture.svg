@@ -1,0 +1,99 @@
+<svg viewBox="0 0 1180 1120" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Inter, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#7f8c8d"/>
+    </marker>
+    <marker id="arrowThick" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#5d6d7e"/>
+    </marker>
+  </defs>
+
+  <style>
+    .boundary { fill:#fafafa; stroke:#9e9e9e; stroke-width:1; }
+    .boundaryLabel { fill:#2c3e50; font-size:15px; font-weight:600; }
+    .user { fill:#e1f5fe; stroke:#0288d1; stroke-width:1.5; }
+    .frontend { fill:#e8f5e9; stroke:#388e3c; stroke-width:1.5; }
+    .backend { fill:#fff3e0; stroke:#f57c00; stroke-width:1.5; }
+    .external { fill:#f3e5f5; stroke:#7b1fa2; stroke-width:1.5; }
+    .title { font-size:14px; font-weight:600; }
+    .sub { font-size:13px; }
+    .edgeLabel { fill:#2c3e50; font-size:12px; }
+    .edge { stroke:#7f8c8d; stroke-width:1.3; fill:none; marker-end:url(#arrow); }
+    .edgeThick { stroke:#5d6d7e; stroke-width:2; fill:none; marker-end:url(#arrowThick); }
+    .edgeDashed { stroke:#7f8c8d; stroke-width:1.3; fill:none; stroke-dasharray:4,3; marker-end:url(#arrow); }
+  </style>
+
+  <!-- ================= User ================= -->
+  <rect x="70" y="20" width="230" height="80" rx="14" class="user"/>
+  <text x="185" y="52" text-anchor="middle" class="title" fill="#01579b">👤 User</text>
+  <text x="185" y="74" text-anchor="middle" class="sub" fill="#01579b">Pastes event text</text>
+
+  <!-- Arrow: User -> Browser UI -->
+  <line x1="185" y1="100" x2="185" y2="150" class="edge"/>
+  <text x="195" y="128" class="edgeLabel">1. text + timezone</text>
+
+  <!-- ================= Client Side Boundary ================= -->
+  <rect x="30" y="150" width="320" height="640" rx="14" class="boundary"/>
+  <text x="190" y="178" text-anchor="middle" class="boundaryLabel">Client Side (Browser)</text>
+
+  <rect x="75" y="205" width="230" height="75" rx="10" class="frontend"/>
+  <text x="190" y="235" text-anchor="middle" class="title" fill="#1b5e20">💻 Browser UI</text>
+  <text x="190" y="256" text-anchor="middle" class="sub" fill="#1b5e20">React / Next.js</text>
+
+  <line x1="190" y1="280" x2="190" y2="345" class="edge"/>
+  <text x="200" y="316" class="edgeLabel">4. View / Edit data</text>
+
+  <rect x="75" y="345" width="230" height="75" rx="10" class="frontend"/>
+  <text x="190" y="375" text-anchor="middle" class="title" fill="#1b5e20">✏️ Event Editor</text>
+  <text x="190" y="396" text-anchor="middle" class="sub" fill="#1b5e20">Component</text>
+
+  <line x1="190" y1="420" x2="190" y2="485" class="edge"/>
+  <text x="200" y="456" class="edgeLabel">5. Generate Ics</text>
+
+  <rect x="75" y="485" width="230" height="75" rx="10" class="frontend"/>
+  <text x="190" y="515" text-anchor="middle" class="title" fill="#1b5e20">⚙️ ICS Generator</text>
+  <text x="190" y="536" text-anchor="middle" class="sub" fill="#1b5e20">Utility</text>
+
+  <!-- ================= Server Side Boundary ================= -->
+  <rect x="410" y="150" width="320" height="480" rx="14" class="boundary"/>
+  <text x="570" y="178" text-anchor="middle" class="boundaryLabel">Server Side (Next.js Node.js)</text>
+
+  <rect x="455" y="205" width="230" height="75" rx="10" class="backend"/>
+  <text x="570" y="235" text-anchor="middle" class="title" fill="#e65100">🧠 API Route</text>
+  <text x="570" y="256" text-anchor="middle" class="sub" fill="#e65100">ai-parser.ts</text>
+
+  <line x1="570" y1="280" x2="570" y2="450" class="edgeDashed"/>
+  <text x="580" y="370" class="edgeLabel">GET/PUT /api/settings/ai</text>
+
+  <ellipse cx="570" cy="460" rx="115" ry="16" class="backend"/>
+  <path d="M455,460 L455,545 A115,16 0 0 0 685,545 L685,460" class="backend"/>
+  <ellipse cx="570" cy="545" rx="115" ry="16" class="backend"/>
+  <text x="570" y="500" text-anchor="middle" class="title" fill="#e65100">💾 SQLite Database</text>
+  <text x="570" y="521" text-anchor="middle" class="sub" fill="#e65100">Stores API key &amp; model</text>
+
+  <!-- ================= Groq API ================= -->
+  <rect x="790" y="245" width="230" height="80" rx="14" class="external"/>
+  <text x="905" y="277" text-anchor="middle" class="title" fill="#4a148c">🤖 Groq API</text>
+  <text x="905" y="298" text-anchor="middle" class="sub" fill="#4a148c">Llama 3.3 70B</text>
+
+  <!-- Browser UI <-> API Route -->
+  <path d="M305,225 L455,225" class="edgeThick"/>
+  <text x="335" y="215" class="edgeLabel">2. POST /api/ai/parse</text>
+  <path d="M455,255 L305,255" class="edgeThick"/>
+  <text x="330" y="272" class="edgeLabel">3. returns parsed event</text>
+
+  <!-- API Route <-> Groq API -->
+  <path d="M685,220 L790,268" class="edge"/>
+  <text x="700" y="205" class="edgeLabel">System + User messages</text>
+  <path d="M790,300 L685,240" class="edge"/>
+  <text x="700" y="320" class="edgeLabel">JSON event data</text>
+
+  <!-- ================= Calendar App ================= -->
+  <line x1="190" y1="560" x2="190" y2="850" class="edge"/>
+  <text x="200" y="710" class="edgeLabel">6. .ics download</text>
+
+  <rect x="55" y="850" width="270" height="80" rx="14" class="external"/>
+  <text x="190" y="882" text-anchor="middle" class="title" fill="#4a148c">📅 Calendar App</text>
+  <text x="190" y="903" text-anchor="middle" class="sub" fill="#4a148c">Google / Outlook / Apple</text>
+
+</svg>
