@@ -5,44 +5,48 @@
 ## How It Works
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#F0F8FF', 'primaryTextColor': '#333', 'primaryBorderColor': '#777', 'lineColor': '#555', 'fontSize': '16px', 'fontFamily': 'inter, helvetica, sans-serif'}}}%%
 flowchart TD
-    %% Styling Definitions for modern look (soft pastels and rounded corners)
-    classDef user fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b,rx:10,ry:10;
-    classDef frontend fill:#e8f5e9,stroke:#388e3c,stroke-width:1.5px,color:#1b5e20,rx:8,ry:8;
-    classDef backend fill:#fff3e0,stroke:#f57c00,stroke-width:1.5px,color:#e65100,rx:8,ry:8;
-    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px,color:#4a148c,rx:10,ry:10;
+    %% Styling Definitions based on color palette from image_0.png
+    %% Blue (Top-level actions) -> Light cyan from 'Embedding'
+    classDef action fill:#EBF5FB,stroke:#AEB6BF,stroke-width:1px,color:#1B4F72,rx:5,ry:5;
+    %% Yellow (Processing/Middle) -> Yellow from 'Prompt engineering'
+    classDef process fill:#FEF9E7,stroke:#F7DC6F,stroke-width:1px,color:#7D6608,rx:5,ry:5;
+    %% Red (External/AI) -> Light red from 'LLM generation'
+    classDef ai fill:#FDEDEC,stroke:#F1948A,stroke-width:1px,color:#7B241C,rx:5,ry:5;
+    %% Grey (Database/Storage) -> Light grey from 'Grounded answer'
+    classDef storage fill:#F4F6F6,stroke:#D5DBDB,stroke-width:1px,color:#515A5A,rx:5,ry:5;
     
-    %% Boundary Nodes Styling (for grouping and clarity)
-    classDef boundary stroke:#9e9e9e,stroke-width:1px,fill:#fafafa,rx:12,ry:12;
+    %% Boundary Nodes Styling (Cleaner, less dominant)
+    classDef boundary stroke:#AEB6BF,stroke-width:1px,stroke-dasharray: 5 5,fill:none,rx:8,ry:8;
 
-    %% Nodes Outside Boundaries
-    U["👤 User<br/>Pastes event text"]:::user
-    C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
+    %% --- Nodes Outside Boundaries (Start/End Points) ---
+    U("👤 User<br/>Pastes event text"):::action
+    C("📅 Calendar App<br/>Google / Outlook / Apple"):::action
 
-    %% Client Side Group with Boundary
+    %% --- Client Side Group with Boundary ---
     subgraph Client ["Client Side (Browser)"]
         direction TB
-        B["💻 Browser UI<br/>React / Next.js"]:::frontend
-        E["✏️ Event Editor<br/>Component"]:::frontend
-        I["⚙️ ICS Generator<br/>Utility"]:::frontend
+        B("💻 Browser UI<br/>React / Next.js"):::process
+        E("✏️ Event Editor<br/>Component"):::process
+        I("⚙️ ICS Generator<br/>Utility"):::process
     end
-    %% Apply boundary style to the subgraph itself
+    %% Apply boundary style
     class Client boundary;
 
-    %% Server Side Group with Boundary
+    %% --- Server Side Group with Boundary ---
     subgraph Server ["Server Side (Next.js Node.js)"]
         direction TB
-        A["🧠 API Route<br/>ai-parser.ts"]:::backend
-        DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
+        A("🧠 API Route<br/>ai-parser.ts"):::process
+        DB[("💾 SQLite Database<br/>Stores API key & model")]:::storage
     end
-    %% Apply boundary style to the subgraph itself
+    %% Apply boundary style
     class Server boundary;
 
-    %% External Services
-    G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
+    %% --- External Services ---
+    G("🤖 Groq API<br/>Llama 3.3 70B"):::ai
 
-    %% Data Flow / Relationships (Interaction Links)
+    %% --- Data Flow / Relationships ---
     U -->|1. text + timezone| B
     
     %% Split interactions for better arrow style application
