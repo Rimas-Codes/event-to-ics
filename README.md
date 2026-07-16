@@ -5,116 +5,19 @@
 ## How It Works
 
 ```mermaid
-
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffffff', 'primaryTextColor': '#2c3e50', 'primaryBorderColor': '#bdc3c7', 'lineColor': '#7f8c8d', 'fontSize': '14px', 'fontFamily': 'Helvetica Neue, Inter, Arial, sans-serif'}}}%%
-
 flowchart TD
-
-    %% Styling Definitions for modern look (soft pastels and rounded corners)
-
-    classDef user fill:#e1f5fe,stroke:#0288d1,stroke-width:1.5px,color:#01579b,rx:10,ry:10;
-
-    classDef frontend fill:#e8f5e9,stroke:#388e3c,stroke-width:1.5px,color:#1b5e20,rx:8,ry:8;
-
-    classDef backend fill:#fff3e0,stroke:#f57c00,stroke-width:1.5px,color:#e65100,rx:8,ry:8;
-
-    classDef external fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1.5px,color:#4a148c,rx:10,ry:10;
-
-    
-
-    %% Boundary Nodes Styling (for grouping and clarity)
-
-    classDef boundary stroke:#9e9e9e,stroke-width:1px,fill:#fafafa,rx:12,ry:12;
-
-
-
-    %% Nodes Outside Boundaries
-
-    U["👤 User<br/>Pastes event text"]:::user
-
-    C["📅 Calendar App<br/>Google / Outlook / Apple"]:::external
-
-
-
-    %% Client Side Group with Boundary
-
-    subgraph Client ["Client Side (Browser)"]
-
-        direction TB
-
-        B["💻 Browser UI<br/>React / Next.js"]:::frontend
-
-        E["✏️ Event Editor<br/>Component"]:::frontend
-
-        I["⚙️ ICS Generator<br/>Utility"]:::frontend
-
-    end
-
-    %% Apply boundary style to the subgraph itself
-
-    class Client boundary;
-
-
-
-    %% Server Side Group with Boundary
-
-    subgraph Server ["Server Side (Next.js Node.js)"]
-
-        direction TB
-
-        A["🧠 API Route<br/>ai-parser.ts"]:::backend
-
-        DB[("💾 SQLite Database<br/>Stores API key & model")]:::backend
-
-    end
-
-    %% Apply boundary style to the subgraph itself
-
-    class Server boundary;
-
-
-
-    %% External Services
-
-    G["🤖 Groq API<br/>Llama 3.3 70B"]:::external
-
-
-
-    %% Data Flow / Relationships (Interaction Links)
-
-    U -->|1. text + timezone| B
-
-    
-
-    %% Split interactions for better arrow style application
-
-    B ==>|2. POST /api/ai/parse| A
-
-    A ==>|3. returns parsed event| B
-
-    
-
-    %% Internal Client Flow (Solid)
-
-    B -->|4. View / Edit data| E
-
-    E -->|5. Generate Ics| I
-
-    I -->|6. .ics download| C
-
-
-
-    %% Internal Server Flow (Thinner and dashed where appropriate)
-
-    A -->|System + User messages| G
-
+    U["User<br/>Pastes event text"] -->|text + timezone| B["Browser UI<br/>React / Next.js"]
+    B -->|POST /api/ai/parse| A["Next.js API Route<br/>ai-parser.ts"]
+    A -->|system + user messages| G["Groq API<br/>Llama 3.3 70B"]
+    A -.->|GET/PUT /api/settings/ai| DB["SQLite<br/>Stores API key and model"]
     G -->|JSON event data| A
-
-    A -.->|GET/PUT /api/settings/ai| DB
-
+    A -->|parsed event| B
+    B -->|user edits| E["Event Editor"]
+    E -->|generateIcs| I["ICS Generator"]
+    I -->|.ics download| C["Calendar App<br/>Google / Outlook / Apple"]
 ```
 
-<!-- ![Architecture Diagram](docs/architecture-diagram.png) --> 
+![Architecture Diagram](docs/architecture-diagram.png)
 
 ---
 
@@ -210,7 +113,7 @@ Extract the entire folder from the ZIP file. **Do not** run scripts from inside 
 
 ### Step 2: Install
 
-Double-click `install.bat`. It will:
+Open the `app/` folder, then double-click `install.bat`. It will:
 
 1. Check that Node.js is installed
 2. Run `npm install` to download dependencies (~300-400 MB)
@@ -219,7 +122,7 @@ Double-click `install.bat`. It will:
 
 ### Step 3: Configure
 
-1. Double-click `start.vbs` to launch the app (the browser opens automatically)
+1. Open the `app/` folder, then double-click `start.vbs` to launch the app (the browser opens automatically)
 2. Click the **⚙ Settings** button in the top-right corner
 3. Paste your **Groq API key** (get one free at [console.groq.com/keys](https://console.groq.com/keys))
 4. Optionally change the model (default: Llama 3.3 70B)
@@ -332,6 +235,29 @@ Closing the browser tab will automatically stop the server after ~15 seconds.
 - The Groq API key and model preference are stored in a **local SQLite database**
 - No analytics, no telemetry, no external tracking
 - The server process stops automatically when you close the browser tab
+
+---
+
+## Project Structure
+
+```
+event-to-ics/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── docs/
+│   └── architecture-diagram.png
+└── app/                       ← All application code
+    ├── package.json
+    ├── install.bat
+    ├── start.vbs
+    ├── prisma/
+    ├── public/
+    └── src/
+        ├── app/
+        ├── components/
+        └── lib/
+```
 
 ---
 
