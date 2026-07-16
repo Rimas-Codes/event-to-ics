@@ -60,9 +60,6 @@ flowchart TD
     G -->|JSON event data| A
     A -.->|GET/PUT /api/settings/ai| DB
 
-    %% Invisible structural links to force the precise side-by-side column layout
-    Client ~~~ Server ~~~ G
-
 ---
 
 ## What the App Does
