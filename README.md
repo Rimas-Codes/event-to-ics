@@ -132,7 +132,7 @@ The main screen shows a large text area where you paste the event text. You'll s
 - A **theme toggle** (light/dark) and a **settings** button in the header
 
 <p align="center">
-  <img src="docs/before%20groq.png" width="400" alt="Before Groq">
+  <img src="docs/before%20groq.png" width="800" alt="Before Groq">
 </p>
 
 After setting up Groq, the user interface would look as shown below. 
@@ -165,7 +165,7 @@ The parsed event appears in an editable form:
 - **AI Reasoning** — collapsible section showing how the AI interpreted the text
 
 <p align="center">
-  <img src="docs/result.jpeg" width="400" alt="Groq Result">
+  <img src="docs/result.jpeg" width="800" alt="Groq Result">
 </p>
 
 
