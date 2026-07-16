@@ -1,99 +1,122 @@
-<svg viewBox="0 0 1180 1120" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Inter, Arial, sans-serif">
+<svg viewBox="0 0 1150 820" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Inter, Arial, sans-serif">
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#7f8c8d"/>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8a97a0"/>
     </marker>
-    <marker id="arrowThick" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#5d6d7e"/>
+    <marker id="arrowThick" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#546472"/>
     </marker>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1a2733" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="userGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eaf7ff"/>
+      <stop offset="100%" stop-color="#d5eefd"/>
+    </linearGradient>
+    <linearGradient id="frontendGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eefbf0"/>
+      <stop offset="100%" stop-color="#dcf3e1"/>
+    </linearGradient>
+    <linearGradient id="backendGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff8ef"/>
+      <stop offset="100%" stop-color="#ffecd4"/>
+    </linearGradient>
+    <linearGradient id="externalGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f9f0fc"/>
+      <stop offset="100%" stop-color="#f0ddf7"/>
+    </linearGradient>
   </defs>
 
   <style>
-    .boundary { fill:#fafafa; stroke:#9e9e9e; stroke-width:1; }
-    .boundaryLabel { fill:#2c3e50; font-size:15px; font-weight:600; }
-    .user { fill:#e1f5fe; stroke:#0288d1; stroke-width:1.5; }
-    .frontend { fill:#e8f5e9; stroke:#388e3c; stroke-width:1.5; }
-    .backend { fill:#fff3e0; stroke:#f57c00; stroke-width:1.5; }
-    .external { fill:#f3e5f5; stroke:#7b1fa2; stroke-width:1.5; }
-    .title { font-size:14px; font-weight:600; }
-    .sub { font-size:13px; }
-    .edgeLabel { fill:#2c3e50; font-size:12px; }
-    .edge { stroke:#7f8c8d; stroke-width:1.3; fill:none; marker-end:url(#arrow); }
-    .edgeThick { stroke:#5d6d7e; stroke-width:2; fill:none; marker-end:url(#arrowThick); }
-    .edgeDashed { stroke:#7f8c8d; stroke-width:1.3; fill:none; stroke-dasharray:4,3; marker-end:url(#arrow); }
+    .boundary { fill:#fbfbfc; stroke:#d8dce0; stroke-width:1.2; }
+    .boundaryLabel { fill:#4a5560; font-size:14px; font-weight:700; letter-spacing:.2px; }
+    .user { fill:url(#userGrad); stroke:#0288d1; stroke-width:1.5; }
+    .frontend { fill:url(#frontendGrad); stroke:#379150; stroke-width:1.5; }
+    .backend { fill:url(#backendGrad); stroke:#e08b1f; stroke-width:1.5; }
+    .external { fill:url(#externalGrad); stroke:#8a34b3; stroke-width:1.5; }
+    .title { font-size:13.5px; font-weight:700; }
+    .sub { font-size:12px; opacity:.85; }
+    .edgeLabel { fill:#3f4a54; font-size:11.5px; }
+    .edge { stroke:#8a97a0; stroke-width:1.4; fill:none; marker-end:url(#arrow); }
+    .edgeThick { stroke:#546472; stroke-width:2; fill:none; marker-end:url(#arrowThick); }
+    .edgeDashed { stroke:#8a97a0; stroke-width:1.4; fill:none; stroke-dasharray:4,3; marker-end:url(#arrow); }
+    .node { filter:url(#softShadow); }
   </style>
 
   <!-- ================= User ================= -->
-  <rect x="70" y="20" width="230" height="80" rx="14" class="user"/>
-  <text x="185" y="52" text-anchor="middle" class="title" fill="#01579b">👤 User</text>
-  <text x="185" y="74" text-anchor="middle" class="sub" fill="#01579b">Pastes event text</text>
+  <rect x="70" y="20" width="230" height="72" rx="14" class="user node"/>
+  <text x="185" y="50" text-anchor="middle" class="title" fill="#01579b">👤 User</text>
+  <text x="185" y="70" text-anchor="middle" class="sub" fill="#01579b">Pastes event text</text>
 
-  <!-- Arrow: User -> Browser UI -->
-  <line x1="185" y1="100" x2="185" y2="150" class="edge"/>
-  <text x="195" y="128" class="edgeLabel">1. text + timezone</text>
+  <line x1="185" y1="92" x2="185" y2="140" class="edge"/>
+  <text x="200" y="120" class="edgeLabel">1. text + timezone</text>
 
   <!-- ================= Client Side Boundary ================= -->
-  <rect x="30" y="150" width="320" height="640" rx="14" class="boundary"/>
-  <text x="190" y="178" text-anchor="middle" class="boundaryLabel">Client Side (Browser)</text>
+  <rect x="30" y="140" width="320" height="420" rx="16" class="boundary"/>
+  <text x="190" y="166" text-anchor="middle" class="boundaryLabel">CLIENT SIDE — BROWSER</text>
 
-  <rect x="75" y="205" width="230" height="75" rx="10" class="frontend"/>
-  <text x="190" y="235" text-anchor="middle" class="title" fill="#1b5e20">💻 Browser UI</text>
-  <text x="190" y="256" text-anchor="middle" class="sub" fill="#1b5e20">React / Next.js</text>
+  <rect x="75" y="190" width="230" height="68" rx="10" class="frontend node"/>
+  <text x="190" y="218" text-anchor="middle" class="title" fill="#1b5e20">💻 Browser UI</text>
+  <text x="190" y="237" text-anchor="middle" class="sub" fill="#1b5e20">React / Next.js</text>
 
-  <line x1="190" y1="280" x2="190" y2="345" class="edge"/>
-  <text x="200" y="316" class="edgeLabel">4. View / Edit data</text>
+  <line x1="190" y1="258" x2="190" y2="316" class="edge"/>
+  <text x="205" y="292" class="edgeLabel">4. View / Edit data</text>
 
-  <rect x="75" y="345" width="230" height="75" rx="10" class="frontend"/>
-  <text x="190" y="375" text-anchor="middle" class="title" fill="#1b5e20">✏️ Event Editor</text>
-  <text x="190" y="396" text-anchor="middle" class="sub" fill="#1b5e20">Component</text>
+  <rect x="75" y="316" width="230" height="68" rx="10" class="frontend node"/>
+  <text x="190" y="344" text-anchor="middle" class="title" fill="#1b5e20">✏️ Event Editor</text>
+  <text x="190" y="363" text-anchor="middle" class="sub" fill="#1b5e20">Component</text>
 
-  <line x1="190" y1="420" x2="190" y2="485" class="edge"/>
-  <text x="200" y="456" class="edgeLabel">5. Generate Ics</text>
+  <line x1="190" y1="384" x2="190" y2="442" class="edge"/>
+  <text x="205" y="418" class="edgeLabel">5. Generate ics</text>
 
-  <rect x="75" y="485" width="230" height="75" rx="10" class="frontend"/>
-  <text x="190" y="515" text-anchor="middle" class="title" fill="#1b5e20">⚙️ ICS Generator</text>
-  <text x="190" y="536" text-anchor="middle" class="sub" fill="#1b5e20">Utility</text>
+  <rect x="75" y="442" width="230" height="68" rx="10" class="frontend node"/>
+  <text x="190" y="470" text-anchor="middle" class="title" fill="#1b5e20">⚙️ ICS Generator</text>
+  <text x="190" y="489" text-anchor="middle" class="sub" fill="#1b5e20">Utility</text>
 
   <!-- ================= Server Side Boundary ================= -->
-  <rect x="410" y="150" width="320" height="480" rx="14" class="boundary"/>
-  <text x="570" y="178" text-anchor="middle" class="boundaryLabel">Server Side (Next.js Node.js)</text>
+  <rect x="410" y="140" width="320" height="420" rx="16" class="boundary"/>
+  <text x="570" y="166" text-anchor="middle" class="boundaryLabel">SERVER SIDE — NEXT.JS / NODE</text>
 
-  <rect x="455" y="205" width="230" height="75" rx="10" class="backend"/>
-  <text x="570" y="235" text-anchor="middle" class="title" fill="#e65100">🧠 API Route</text>
-  <text x="570" y="256" text-anchor="middle" class="sub" fill="#e65100">ai-parser.ts</text>
+  <rect x="455" y="190" width="230" height="68" rx="10" class="backend node"/>
+  <text x="570" y="218" text-anchor="middle" class="title" fill="#c0620b">🧠 API Route</text>
+  <text x="570" y="237" text-anchor="middle" class="sub" fill="#c0620b">ai-parser.ts</text>
 
-  <line x1="570" y1="280" x2="570" y2="450" class="edgeDashed"/>
-  <text x="580" y="370" class="edgeLabel">GET/PUT /api/settings/ai</text>
+  <line x1="570" y1="258" x2="570" y2="425" class="edgeDashed"/>
+  <text x="585" y="348" class="edgeLabel">GET/PUT /api/settings/ai</text>
 
-  <ellipse cx="570" cy="460" rx="115" ry="16" class="backend"/>
-  <path d="M455,460 L455,545 A115,16 0 0 0 685,545 L685,460" class="backend"/>
-  <ellipse cx="570" cy="545" rx="115" ry="16" class="backend"/>
-  <text x="570" y="500" text-anchor="middle" class="title" fill="#e65100">💾 SQLite Database</text>
-  <text x="570" y="521" text-anchor="middle" class="sub" fill="#e65100">Stores API key &amp; model</text>
+  <!-- SQLite cylinder -->
+  <g class="node">
+    <path d="M455,440 a115,15 0 1,0 230,0 a115,15 0 1,0 -230,0 M455,440 L455,505 a115,15 0 0,0 230,0 L685,440"
+          fill="url(#backendGrad)" stroke="#e08b1f" stroke-width="1.5"/>
+  </g>
+  <text x="570" y="470" text-anchor="middle" class="title" fill="#c0620b">💾 SQLite Database</text>
+  <text x="570" y="489" text-anchor="middle" class="sub" fill="#c0620b">Stores API key &amp; model</text>
 
   <!-- ================= Groq API ================= -->
-  <rect x="790" y="245" width="230" height="80" rx="14" class="external"/>
-  <text x="905" y="277" text-anchor="middle" class="title" fill="#4a148c">🤖 Groq API</text>
-  <text x="905" y="298" text-anchor="middle" class="sub" fill="#4a148c">Llama 3.3 70B</text>
+  <rect x="800" y="188" width="230" height="72" rx="14" class="external node"/>
+  <text x="915" y="218" text-anchor="middle" class="title" fill="#4a148c">🤖 Groq API</text>
+  <text x="915" y="238" text-anchor="middle" class="sub" fill="#4a148c">Llama 3.3 70B</text>
 
-  <!-- Browser UI <-> API Route -->
-  <path d="M305,225 L455,225" class="edgeThick"/>
-  <text x="335" y="215" class="edgeLabel">2. POST /api/ai/parse</text>
-  <path d="M455,255 L305,255" class="edgeThick"/>
-  <text x="330" y="272" class="edgeLabel">3. returns parsed event</text>
+  <!-- Browser UI <-> API Route (parallel, offset, non-overlapping) -->
+  <path d="M305,212 L455,212" class="edgeThick"/>
+  <text x="318" y="205" class="edgeLabel">2. POST /api/ai/parse</text>
 
-  <!-- API Route <-> Groq API -->
-  <path d="M685,220 L790,268" class="edge"/>
-  <text x="700" y="205" class="edgeLabel">System + User messages</text>
-  <path d="M790,300 L685,240" class="edge"/>
-  <text x="700" y="320" class="edgeLabel">JSON event data</text>
+  <path d="M455,238 L305,238" class="edgeThick"/>
+  <text x="318" y="255" class="edgeLabel">3. returns parsed event</text>
+
+  <!-- API Route <-> Groq API (curved, cleanly separated) -->
+  <path d="M685,204 C 745,190 745,190 800,204" class="edge"/>
+  <text x="705" y="185" class="edgeLabel">System + User messages</text>
+
+  <path d="M800,244 C 745,258 745,258 685,244" class="edge"/>
+  <text x="715" y="269" class="edgeLabel">JSON event data</text>
 
   <!-- ================= Calendar App ================= -->
-  <line x1="190" y1="560" x2="190" y2="850" class="edge"/>
-  <text x="200" y="710" class="edgeLabel">6. .ics download</text>
+  <line x1="190" y1="510" x2="190" y2="610" class="edge"/>
+  <text x="205" y="565" class="edgeLabel">6. .ics download</text>
 
-  <rect x="55" y="850" width="270" height="80" rx="14" class="external"/>
-  <text x="190" y="882" text-anchor="middle" class="title" fill="#4a148c">📅 Calendar App</text>
-  <text x="190" y="903" text-anchor="middle" class="sub" fill="#4a148c">Google / Outlook / Apple</text>
+  <rect x="55" y="610" width="270" height="72" rx="14" class="external node"/>
+  <text x="190" y="640" text-anchor="middle" class="title" fill="#4a148c">📅 Calendar App</text>
+  <text x="190" y="660" text-anchor="middle" class="sub" fill="#4a148c">Google / Outlook / Apple</text>
 
 </svg>
